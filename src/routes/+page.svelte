@@ -4,8 +4,8 @@
 	import { serverTimestamp, collection } from 'firebase/firestore';
 	import { doc, setDoc, query, onSnapshot, deleteDoc } from 'firebase/firestore';
 	import { onDestroy } from 'svelte';
-	import Googlelog from '../components/googlelog.svelte';
-
+	import {  googleProvider } from '$lib/firebase';
+	import { signInWithPopup } from 'firebase/auth';
 	let thing;
 	let unsubscribe;
 	let foods = [];
@@ -35,14 +35,28 @@
 </script>
 
 {#if !signIn}
-	<Googlelog />
+	<div class="flex items-center flex-col">
+		<section
+			id="whenSignedOut"
+			class="
+		 m-10 bg-gray-700 p-5 rounded-xl shadow-gray-600 w-fit"
+		>
+			<button
+				id="signButon"
+				class=" capitalize font-semibold text-white text-4xl"
+				on:click={async () => await signInWithPopup(auth, googleProvider)}
+			>
+				Sign with google
+			</button>
+		</section>
+	</div>
 {:else if signIn}
-	<div class="flex flex-col items-center h-screen justify-center ">
+	<div class="flex flex-col items-center h-screen justify-center">
 		<div class="">
 			<button
 				on:click={() => {
 					auth.signOut();
-					signIn =false;
+					signIn = false;
 				}}
 				class="bg-orange-400 text-white font-bold p-2 rounded-xl m-3"
 				>Sigg Out
