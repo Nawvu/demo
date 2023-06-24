@@ -9,7 +9,7 @@
 	let thing;
 	let unsubscribe;
 	let foods = [];
-	let signIn;
+	let signIn = true;
 	const q = query(collection(db, 'things'));
 	unsubscribe = onSnapshot(q, (querySnapshot) => {
 		foods = [];
@@ -37,11 +37,12 @@
 {#if !signIn}
 	<Googlelog />
 {:else if signIn}
-	<div class="flex flex-col items-center h-screen justify-center">
+	<div class="flex flex-col items-center h-screen justify-center ">
 		<div class="">
 			<button
 				on:click={() => {
 					auth.signOut();
+					signIn =false;
 				}}
 				class="bg-orange-400 text-white font-bold p-2 rounded-xl m-3"
 				>Sigg Out

@@ -12,7 +12,7 @@
 		<button
 			id="signButon"
 			class=" capitalize font-semibold text-white text-4xl"
-			on:click={() => signInWithPopup(auth, googleProvider)}
+			on:click={ async () => await signInWithPopup(auth, googleProvider)}
 		>
 			Sign with google
 		</button>
