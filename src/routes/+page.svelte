@@ -35,8 +35,8 @@
 </script>
 
 {#if !signIn}
+	<h3>Misery anguish</h3>
 	<div class="flex items-center flex-col">
-		<h1>CACCAC</h1>
 		<section
 			id="whenSignedOut"
 			class="
@@ -78,13 +78,12 @@
 					</button>
 				</div>
 				<div class="bg-white mt-3 p-3 flex flex-col border-b items-stretch w-full">
-					{#each foods as food (food)}
+					{#each foods.reverse() as food (food)}
 						<div class="flex flex-row justify-between">
 							<p class="font-semibold">{food.name}</p>
 							<button on:click={deletefoo(food)}>Delete</button>
 						</div>
 					{/each}
-					<p>Hi</p>
 				</div>
 			</div>
 		</div>
