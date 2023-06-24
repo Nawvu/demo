@@ -5,7 +5,7 @@
 	import { doc, setDoc, query, onSnapshot, deleteDoc } from 'firebase/firestore';
 	import { onDestroy } from 'svelte';
 	import {  googleProvider } from '$lib/firebase';
-	import { signInWithPopup } from 'firebase/auth';
+	import { signInWithPopup,browserPopupRedirectResolver } from 'firebase/auth';
 	let thing;
 	let unsubscribe;
 	let foods = [];
@@ -44,7 +44,7 @@
 			<button
 				id="signButon"
 				class=" capitalize font-semibold text-white text-4xl"
-				on:click={async () => await signInWithPopup(auth, googleProvider)}
+				on:click={async () => await signInWithPopup(auth, googleProvider,browserPopupRedirectResolver)}
 			>
 				Sign with google
 			</button>
