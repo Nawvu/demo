@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp, getApps, deleteApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -15,11 +15,16 @@ const firebaseConfig = {
 	appId: import.meta.env.VITE_APP_ID
 };
 
-// Initialize Firebase
-export const firebase = initializeApp(firebaseConfig);
+let firebaseApp;
+if (!getApps().length) {
+    firebaseApp = initializeApp(firebaseConfig)
+} else {
+    firebaseApp = getApp()
+    deleteApp(firebaseApp)
+    firebaseApp = initializeApp(firebaseConfig)
+}
 
-export const auth = getAuth(firebase);
+export const db = getFirestore(firebaseApp)
+export const auth = getAuth(firebaseApp)
 
-export const googleProvider = new GoogleAuthProvider();
 
-export const db = getFirestore(firebase);
