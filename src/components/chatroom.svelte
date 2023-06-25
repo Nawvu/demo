@@ -15,6 +15,7 @@
 	} from 'firebase/firestore';
 	import { authStore } from '../store/store';
 	import { onDestroy } from 'svelte';
+    import { auth } from '$lib/firebase';
 	let currUser;
 	let userData;
 	let messagesData = [];
@@ -61,7 +62,7 @@
 		<div class=" flex flex-1 flex-col justify-end overflow-y-auto bg-white p-1">
 			{#if messagesData}
 				{#each messagesData.reverse() as messdata}
-					<p class=" flex {currUser.uid == messdata.uid ? 'justify-end' : 'justify-start'}">
+					<p class=" flex {auth.currentUser.uid == messdata.uid ? 'justify-end' : 'justify-start'}">
 						{messdata.text}
 					</p>
 				{/each}
