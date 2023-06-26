@@ -2,7 +2,6 @@
 	// @ts-nocheck
 
 	import { authHandlers } from '../store/store';
-
 	const input =
 		'cursor-default w-full p-2 border-none bg-red-100/20 placeholder-gray-50 focus:border-none focus:outline-none  shadow-sm shadow-pink-500 focus:bg-transparent focus:text-white text-white px-2 py-4 autofill:bg-transparent autofill:text-white focus:cursor-text';
 

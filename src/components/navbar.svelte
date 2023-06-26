@@ -4,11 +4,9 @@
 
 <div class="fixed">
 	<div
-		class="box-border flex flex-row items-center justify-between border-b-8 border-blue-500 bg-white px-5 py-3 w-screen"
+		class="box-border flex w-screen flex-row items-center justify-between border-b-8 border-blue-500 bg-white px-5 py-3"
 	>
-		<nav>
-			<h1>Demo Nhóm 2</h1>
-		</nav>
+		<h1>Demo Nhóm 2</h1>
 		<button on:click={authHandlers.logout} class="rounded-xl bg-indigo-600 p-2 text-white"
 			>Đăng xuất</button
 		>
