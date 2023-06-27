@@ -13,18 +13,13 @@
 		query,
 		serverTimestamp
 	} from 'firebase/firestore';
-	import { authStore } from '../store/store';
 	import { onDestroy } from 'svelte';
 	import { auth } from '$lib/firebase';
-	let currUser;
-	let userData;
+	import { authHandlers } from '../store/store';
+
 	let messagesData = [];
 	let mess;
 	const messageRef = collection(db, 'messages');
-	authStore.subscribe((curr) => {
-		currUser = curr.user;
-		userData = curr.data;
-	});
 
 	const unsubscribe = onSnapshot(
 		query(messageRef, orderBy('time', 'desc'), limit(20)),
@@ -36,9 +31,7 @@
 			});
 		}
 	);
-	onDestroy(() => {
-		unsubscribe();
-	});
+
 	function sendMess() {
 		if (mess && mess != '') {
 			addDoc(messageRef, {
@@ -55,12 +48,15 @@
 			await deleteDoc(doc(db, 'messages', docr.id));
 		});
 	}
+	onDestroy( ()=>{
+		authHandlers.logout()
+	})
 </script>
 
 <div class=" flex h-screen w-screen flex-col items-center justify-center">
 	<div class="flex h-4/6 w-5/6 flex-col md:w-3/5 lg:w-2/5">
 		<div class="flex flex-1 flex-col-reverse overflow-y-auto rounded-xl bg-white p-3 shadow-sm">
-			<ul />
+			<ul data-test ="messages_list"/>
 			{#if messagesData}
 				{#each messagesData as messdata}
 					<li class="list-none">
@@ -87,16 +83,17 @@
 				bind:value={mess}
 				class="flex-1 rounded-xl bg-slate-200 p-2 transition focus:scale-105 focus:border-none focus:outline-none"
 				placeholder="Aa"
+				data-test="message_input"
 				on:keydown={(keyp) => {
 					if (keyp.key == 'Enter') {
 						sendMess();
 					}
 				}}
 			/>
-			<button on:click={sendMess} class="rounded-md bg-pink-600/10 ml-1 px-3 font-semibold text-4xl text-white">></button>
+			<button data-test ="send_button" on:click={sendMess} class="rounded-md bg-pink-600/10 ml-1 px-3 font-semibold text-4xl text-white">></button>
 		</div>
 		<div>
-			<button on:click={deletleallmess} class="text-white">Delele All</button>
+			<button on:click={deletleallmess} class="text-white" data-test ="delete_button">Delele All</button>
 		</div>
 	</div>
 </div>
